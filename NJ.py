@@ -1,4 +1,9 @@
 #! /usr/bin/env python3
+##################
+#####Neighbor Joining Algorithm for dissimilarity matrix
+#####Yifan Ethan Chen
+#####Math 127 Groupwork 1
+#####09/15/17 Cal
 import numpy as np
 ######input info
 n = 5

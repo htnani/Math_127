@@ -1,13 +1,12 @@
 #! /usr/bin/env python3
-####Plz run this script in python 3
 ##################
-####Doing Neighbor Joining for dissimilarity array (output: Newick format)
-####Yifan Ethan Chen
-####Math 127 HW2
-####10/01/17 Cal
+#####Neighbor Joining Algorithm with Newick output for dissimilarity matrix
+#####Yifan Ethan Chen
+#####Math 127 Groupwork 2
+#####10/11/17 Cal
 import numpy as np
 import copy
-######input info
+#####input info
 n = 5     #change to the matrix n
 input_order = 'A,B,C,D,E'
 a = np.array([[0,0.31,1.01,0.75,1.03],
@@ -28,9 +27,9 @@ order_for_output = input_order.split(',')
 order = ['_('+i+')_' for i in order_for_output]
 
 
-######step1
+#####step1
 def compMij(array):
-######compute R and Rn+Rm matrix
+#####compute R and Rn+Rm matrix
     Rl=[]
     for row in array:
         r=np.sum(row)
@@ -45,12 +44,12 @@ def compMij(array):
     R=np.reshape(np.asarray(R),(len(order),len(order)))
     #print (Rl)
     #print (R)
-######compute Mij matrix
+#####compute Mij matrix
     Mij=(n-2)*array-R
     print ('Mij table:')
     print (order_for_output)
     print (Mij)
-######find the min location 
+#####find the min location 
     mini, minj = np.where(Mij == np.min(Mij))[0]
     print ('We\'re gonna join ' + order_for_output[mini] + ' and ' + order_for_output[minj] + ' in this step and the node is (' + order_for_output[mini] + ',' + order_for_output[minj] +')')
     order.append('_('+order[mini]+','+order[minj]+')_')
@@ -58,12 +57,12 @@ def compMij(array):
     return Rl, mini, minj, order
 
 
-#######step2
+#####step2
 def calGS(array, Rl, mini, minj):
-######calculate the group distance
+#####calculate the group distance
     GSi=1/(n-2)*(Rl[mini]-array[mini][minj])
     GSj=1/(n-2)*(Rl[minj]-array[mini][minj])
-######3 point formula
+#####3 point formula
     vSi=np.around(1/2*(array[mini][minj]+GSi-GSj), decimals=4)
     vSj=array[mini][minj]-vSi
     print ('distance to the parent: ' + order_for_output[mini] +': ' + str(vSi) + ' ;' + order_for_output[minj] +': ' + str(vSj))
@@ -72,9 +71,9 @@ def calGS(array, Rl, mini, minj):
     allresult.append((order[minj],order[minj][1:-1]+':'+str(vSj)))
 
 
-#######step3
+#####step3
 def newdisa(array, mini, minj):
-######calculate the new distance
+#####calculate the new distance
     addeddis=[]
     for i in range(len(order)-1):
         if i == mini or i == minj:
@@ -82,7 +81,7 @@ def newdisa(array, mini, minj):
         else:
             dis=1/2*(array[i][mini]+array[i][minj]-array[mini][minj])
             addeddis.append(dis)
-######create new dis matrix
+#####create new dis matrix
     array=np.delete(array, mini, 0)
     array=np.delete(array, minj-1, 0)
     array=np.delete(array, mini, 1)
@@ -97,7 +96,7 @@ def newdisa(array, mini, minj):
     return order, newarr
 
 
-######endgame
+#####endgame
 def endgame(array):
     dis0=1/2*(array[0][1]+array[0][2]-array[1][2])
     dis1=1/2*(array[0][1]+array[1][2]-array[0][2])
@@ -143,7 +142,7 @@ def do_newick(newick_seq):
     return newick_seq
 
 
-#######
+#####
 for times in range(n):
     Rl, mini, minj, order=compMij(a)
     calGS(a,Rl,mini, minj)
