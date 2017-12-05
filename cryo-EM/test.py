@@ -13,7 +13,7 @@ from functools import partial
 #####input
 #input_file=mrcfile.open('emd_8116.map')
 input_file=mrcfile.open('zika_153.mrc')
-rotaion_num = int(8)
+rotaion_num = int(3)
 
 #####
 print ('Now generating random rotation matrix ...')
@@ -41,18 +41,32 @@ N = sim_images_and_Rs[0][0].shape[0]
 B = np.zeros((N,N,N))
 L = np.zeros((N,N,N))
 
-mp_return_list = pool.map(RC.reconstruct_mp, sim_images_and_Rs)
-for mp_result in mp_return_list:
+for mp_result in pool.imap(RC.reconstruct_mp, sim_images_and_Rs):
 	return_B, return_L = mp_result
 	B += return_B
 	L += return_L
 
-#pool.close()
-
-np.float32(np.real(B))
+back_img = np.float32(np.real(B)/np.real(L))
+back_img = np.nan_to_num(back_img)
 print('Now saving the mrc files ...')
 with mrcfile.new('full2.mrc', overwrite=True) as mrc:
 	mrc.set_data(back_img)
 
 sys.exit()
 
+'''mp_return_list = pool.map(RC.reconstruct_mp, sim_images_and_Rs)
+for mp_result in mp_return_list:
+	return_B, return_L = mp_result
+	B += return_B
+	L += return_L'''
+
+#pool.close()
+
+'''back_img = np.float32(np.real(B)/np.real(L))
+for 0 in to nan
+back_img = np.nan_to_num(back_img)
+print('Now saving the mrc files ...')
+with mrcfile.new('full2.mrc', overwrite=True) as mrc:
+	mrc.set_data(back_img)
+
+sys.exit()'''
