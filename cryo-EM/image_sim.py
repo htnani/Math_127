@@ -9,7 +9,6 @@ def project_fst_ft(mol):
 	
 	#print('Now running 3D fourier Transform ...')
 	N = len(mol)
-	print ('okkk')
 	rho_hat = np.fft.fftshift(np.fft.fftn(mol))
 	wx, wy, wz = np.meshgrid(np.arange(-(N-1)/2, (N-1)/2+1, dtype= int), np.arange(-(N-1)/2, (N-1)/2+1, dtype= int), np.arange(-(N-1)/2, (N-1)/2+1, dtype= int))
 	rho_hat = ((-1)**np.abs(wx+wy+wz)/(N**3)*rho_hat)
@@ -26,7 +25,7 @@ def project_fst_ft(mol):
 
 	return (eta_x, eta_y, )
 
-def project_fst_rotation(R, mol_ft)
+def project_fst_rotation(R, mol_ft):
 	R= np.transpose(R)
 	a= R[0]
 	b= R[1]
@@ -49,7 +48,6 @@ def project_fst(R, mol):
 	
 	#print('Now running 3D fourier Transform ...')
 	N = len(mol)
-	print ('okkk')
 	rho_hat = np.fft.fftshift(np.fft.fftn(mol))
 	wx, wy, wz = np.meshgrid(np.arange(-(N-1)/2, (N-1)/2+1, dtype= int), np.arange(-(N-1)/2, (N-1)/2+1, dtype= int), np.arange(-(N-1)/2, (N-1)/2+1, dtype= int))
 	rho_hat = ((-1)**np.abs(wx+wy+wz)/(N**3)*rho_hat)
