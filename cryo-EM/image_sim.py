@@ -1,6 +1,7 @@
 from scipy.interpolate import RegularGridInterpolator as RGI
 import numpy as np 
 from PIL import Image
+import os, random
 
 ##DONE
 def getRotationMatrix():
@@ -87,7 +88,16 @@ def project_fst(mol, R):
 	return np.real(emSlice)
 
 ##DONE
-def saveImage(image, seq):
+def saveImage(imagesDir, image, seq):
 	#image = SIM.project_fst(Rs[0], rho)
 	im = Image.fromarray(image)
-	im.save(str(seq) + '.tiff')
+	im.save(imagesDir + '/' + str(seq) + '.tiff')
+
+##Done
+def checkImagesDir(imagesDir):
+	if not os.path.dirname(imagesDir):
+		os.makedirs(imagesDir)
+	else:
+		os.system('mv '+imagesDir+' '+imagesDir+'_'+str(random.randint(0, 100))+'.old')
+		os.makedirs(imagesDir)
+	print('Saving the simulated images to ', imagesDir)
