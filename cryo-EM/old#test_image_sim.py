@@ -9,8 +9,8 @@ from functools import partial
 
 ##########################
 #####input
-input_file=mrcfile.open('emd_8116.map')
-#input_file=mrcfile.open('zika_153.mrc')
+#input_file=mrcfile.open('emd_8116.map')
+input_file=mrcfile.open('zika_153.mrc')
 rotaion_num = int(20)
 
 #####

@@ -9,8 +9,8 @@ import numpy as np
 from PIL import Image
 
 input_file = mrcfile.open('zika_153.mrc')
-rotaion_num = int(1)
-imagesDir = '/Users/Ethan/Desktop/Math_127/cryo-EM/images'
+rotaion_num = int(20)   ##change to how many pictures you need
+imagesDir = '/Users/Ethan/Desktop/cryo-EM/images'
 
 #####
 ##This part is used for generating the images
